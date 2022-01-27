@@ -85,6 +85,7 @@ const LogInScreen: React.FC = () => {
               onChangeText={onChange}
               value={value}
               isError={errors.password ? true : false}
+              secureTextEntry={true}
               placeholder="Password"
             />
           )}

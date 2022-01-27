@@ -1,10 +1,152 @@
-import { View, Text } from "react-native"
+import {
+  AuthContainer,
+  AuthContent,
+  Input,
+  Button,
+  AuthError,
+  Title,
+} from "@components/index";
+import { useForm, Controller } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { emailValidation, usernameValidation } from "@shared/utils";
+import { AntDesign } from "@expo/vector-icons";
+import { colors } from "@shared/GlobalStyles/colors";
+import { TouchableOpacity } from "react-native";
+import { IRegisterInfo } from "./interface";
+
+const formInitialValues: IRegisterInfo = { name: "", email: "", password: "" };
 
 const SignUpScreen: React.FC = () => {
+  const [errorMessage, setErrorMessage] = useState("");
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+    reset,
+    setError,
+    clearErrors
+  } = useForm<IRegisterInfo>({
+    defaultValues: formInitialValues,
+  });
+
+  const loginValidation = (data: IRegisterInfo) => {
+    clearErrors()
+    if (!emailValidation(data.email)) {
+      setError("email", { message: "Invalid email" })
+      setErrorMessage(errors.email?.message!);
+      return false;
+    }
+
+    if (!usernameValidation(data.name)) {
+      setError("name", { message: "Invalid name" })
+      setErrorMessage(errors.name?.message!);
+      return false;
+    }
+
+    setErrorMessage("");
+    clearErrors()
+    return true
+  };
+
+  const signupHandler = (data: IRegisterInfo) => {
+    if (!usernameValidation(data.name)) {
+      setError("name", { message: "Invalid name" })
+      setErrorMessage("Invalid name");
+      return false;
+    }
+
+    if (!emailValidation(data.email)) {
+      setError("email", { message: "Invalid email" })
+      setErrorMessage("Invalid email");
+      return
+    }
+
+    reset(formInitialValues)
+    setErrorMessage("");
+    console.log(data);
+  };
+
   return (
-    <View>
-      <Text> SignUpScreen </Text>
-    </View>
+    <AuthContainer>
+      <Title>Registration</Title>
+
+      <AuthContent>
+      <Controller
+          control={control}
+          name="name"
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              isError={errors.name ? true : false}
+              errorMessage={errors.name?.type === 'required' ? 'Required Name' : ''}
+              placeholder="Name"
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="email"
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              isError={errors.email ? true : false}
+              errorMessage={errors.email?.type === 'required' ? 'Required Email' : ''}
+              placeholder="Email"
+              keyboardType="email-address"
+              textContentType="emailAddress"
+            />
+          )}
+        />
+
+        <Controller
+          control={control}
+          name="password"
+          rules={{ required: true }}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <Input
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              isError={errors.password ? true : false}
+              errorMessage={errors.password?.type === 'required' ? 'Required Password' : ''}
+              secureTextEntry={true}
+              placeholder="Password"
+            />
+          )}
+        />
+
+        {errorMessage ? <AuthError message={errorMessage} /> : null}
+
+        <Button onPress={handleSubmit(signupHandler)}>
+          Register{" "}
+          <AntDesign
+            name="arrowright"
+            style={{ marginLeft: 5 }}
+            size={30}
+            color={colors.primary}
+          />
+        </Button>
+      </AuthContent>
+
+      <TouchableOpacity onPress={() => {}}>
+        <Title>
+          <AntDesign
+            name="arrowleft"
+            style={{ marginRight: 5 }}
+            size={30}
+            color={colors.text}
+          />
+          {" "}Back
+        </Title>
+      </TouchableOpacity>
+    </AuthContainer>
   )
 }
 
