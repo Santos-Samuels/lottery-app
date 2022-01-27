@@ -1,34 +1,62 @@
-import { AuthContainer, AuthContent, Input, Button, AuthError } from "@components/index";
+import {
+  AuthContainer,
+  AuthContent,
+  Input,
+  Button,
+  AuthError,
+  Title,
+} from "@components/index";
 import { ILoginInfo } from "./interface";
 import { useForm, Controller } from "react-hook-form";
 import { StyledText, StyledTouchableOpacity } from "./style";
 import { useState } from "react";
+import { emailValidation } from "@shared/utils";
+import { AntDesign } from "@expo/vector-icons";
+import { colors } from "@shared/GlobalStyles/colors";
+import { TouchableOpacity } from "react-native";
 
 const formInitialValues: ILoginInfo = { email: "", password: "" };
 
 const LogInScreen: React.FC = () => {
-  const [errorMessage, setErrorMessage] = useState('')
+  const [errorMessage, setErrorMessage] = useState("");
   const {
     control,
     handleSubmit,
     formState: { errors },
+    getValues,
+    setFocus,
   } = useForm<ILoginInfo>({
     defaultValues: formInitialValues,
   });
 
+  const loginValidation = (data: ILoginInfo) => {
+    if (!data.email) {
+      setErrorMessage("Email can't be empety");
+      return;
+    }
+
+    if (!data.password) {
+      setErrorMessage("Password can't be empety");
+      return;
+    }
+
+    if (!emailValidation(data.email)) {
+      setErrorMessage("Invalid email");
+      return;
+    }
+
+    setErrorMessage("");
+    handleSubmit(loginHandler);
+  };
 
   const loginHandler = (data: ILoginInfo) => {
     console.log(data);
   };
 
-  // const errorHandler = () => {
-  //   if (errors.email) {
-      
-  //   }
-  // };
-
   return (
     <AuthContainer>
+      <Title>Authentication</Title>
+
       <AuthContent>
         <Controller
           control={control}
@@ -39,7 +67,7 @@ const LogInScreen: React.FC = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              isError={ errors.email ? true : false }
+              isError={errors.email || errorMessage ? true : false}
               placeholder="Email"
               keyboardType="email-address"
               textContentType="emailAddress"
@@ -56,20 +84,40 @@ const LogInScreen: React.FC = () => {
               onBlur={onBlur}
               onChangeText={onChange}
               value={value}
-              isError={false}
+              isError={errors.password ? true : false}
               placeholder="Password"
             />
           )}
         />
 
-        <AuthError message={errorMessage} />
+        {errorMessage ? <AuthError message={errorMessage} /> : null}
 
         <StyledTouchableOpacity onPress={() => {}}>
           <StyledText> I forget my password </StyledText>
         </StyledTouchableOpacity>
 
-        <Button onPress={handleSubmit(loginHandler)}>Log In</Button>
+        <Button onPress={() => loginValidation(getValues())}>
+          Log In{" "}
+          <AntDesign
+            name="arrowright"
+            style={{ marginLeft: 5 }}
+            size={30}
+            color={colors.primary}
+          />
+        </Button>
       </AuthContent>
+
+      <TouchableOpacity onPress={() => {}}>
+        <Title>
+          Sign Up{" "}
+          <AntDesign
+            name="arrowright"
+            style={{ marginLeft: 5 }}
+            size={30}
+            color={colors.text}
+          />
+        </Title>
+      </TouchableOpacity>
     </AuthContainer>
   );
 };

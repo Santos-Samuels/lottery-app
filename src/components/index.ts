@@ -3,6 +3,7 @@ import AuthContent from "./Layout/AuthContent";
 import AuthError from "./UI/AuthError";
 import Button from "./UI/Button";
 import Input from "./UI/Input";
+import Title from "./UI/Title";
 
 export {
   AuthContainer,
@@ -10,4 +11,5 @@ export {
   Input,
   Button,
   AuthError,
+  Title,
 }

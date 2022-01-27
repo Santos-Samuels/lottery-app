@@ -12,4 +12,5 @@ export const StyledView = styled.View`
   shadow-opacity: 1;
   width: 100%;
   background-color: white;
+  margin-vertical: 30px;
 `

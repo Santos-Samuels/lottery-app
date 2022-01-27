@@ -7,6 +7,7 @@ export const StyledTextInput = styled.TextInput<{isError: boolean}>`
   font-style: italic;
   border-style: solid;
   border-bottom-color: ${props => props.isError ? colors.error : colors.border};
-  border-bottom-width: 1;
+  border-bottom-width: ${props => props.isError ? 2 : 1};
   width: 100%;
+  color: ${colors.text}
 `

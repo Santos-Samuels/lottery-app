@@ -1,11 +1,11 @@
 import { StyledText } from "./style";
 
 interface IProps {
-  message?: string;
+  message: string;
 }
 
 const AuthError: React.FC<IProps> = (props) => {
-  return <StyledText>{props.message ? props.message : ''}</StyledText>;
+  return <StyledText>{props.message}</StyledText>;
 };
 
 export default AuthError;
