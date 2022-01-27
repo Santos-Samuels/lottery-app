@@ -1,19 +1,20 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LogInScreen, SignUpScreen } from '@screens/index';
+import { ResetPasswordScreen, LogInScreen, SignUpScreen } from '@screens/index';
 
 export type RootAuthStackParamList = {
   LogInScreen: undefined;
   SignUpScreen: undefined;
-  ForgetPasswordScreen: undefined;
+  ResetPasswordScreen: undefined;
 }
 
 const Stack = createNativeStackNavigator<RootAuthStackParamList>();
 
 const AuthStack: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="LogInScreen">
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="ResetPasswordScreen">
       <Stack.Screen name="LogInScreen" component={LogInScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+      <Stack.Screen name="ResetPasswordScreen" component={ResetPasswordScreen} />
     </Stack.Navigator>
   );
 }
