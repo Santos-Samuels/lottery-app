@@ -23,30 +23,10 @@ const SignUpScreen: React.FC = () => {
     handleSubmit,
     formState: { errors },
     reset,
-    setError,
-    clearErrors
+    setError
   } = useForm<IRegisterInfo>({
     defaultValues: formInitialValues,
   });
-
-  const loginValidation = (data: IRegisterInfo) => {
-    clearErrors()
-    if (!emailValidation(data.email)) {
-      setError("email", { message: "Invalid email" })
-      setErrorMessage(errors.email?.message!);
-      return false;
-    }
-
-    if (!usernameValidation(data.name)) {
-      setError("name", { message: "Invalid name" })
-      setErrorMessage(errors.name?.message!);
-      return false;
-    }
-
-    setErrorMessage("");
-    clearErrors()
-    return true
-  };
 
   const signupHandler = (data: IRegisterInfo) => {
     if (!usernameValidation(data.name)) {

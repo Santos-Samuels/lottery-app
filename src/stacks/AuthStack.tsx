@@ -11,7 +11,7 @@ const Stack = createNativeStackNavigator<RootAuthStackParamList>();
 
 const AuthStack: React.FC = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="SignUpScreen">
+    <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="LogInScreen">
       <Stack.Screen name="LogInScreen" component={LogInScreen} />
       <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
     </Stack.Navigator>

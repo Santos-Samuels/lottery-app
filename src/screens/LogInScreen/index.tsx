@@ -23,33 +23,21 @@ const LogInScreen: React.FC = () => {
     control,
     handleSubmit,
     formState: { errors },
-    getValues,
-    setFocus,
+    setError,
+    reset
   } = useForm<ILoginInfo>({
     defaultValues: formInitialValues,
   });
 
-  const loginValidation = (data: ILoginInfo) => {
-    if (!data.email) {
-      setErrorMessage("Email can't be empety");
-      return;
-    }
-
-    if (!data.password) {
-      setErrorMessage("Password can't be empety");
-      return;
-    }
-
-    if (!emailValidation(data.email)) {
-      setErrorMessage("Invalid email");
-      return;
-    }
-
-    setErrorMessage("");
-    handleSubmit(loginHandler);
-  };
-
   const loginHandler = (data: ILoginInfo) => {
+    if (!emailValidation(data.email)) {
+      setError("email", { message: "Invalid email" })
+      setErrorMessage("Invalid name");
+      return false;
+    }
+
+    reset(formInitialValues)
+    setErrorMessage("");
     console.log(data);
   };
 
@@ -68,6 +56,7 @@ const LogInScreen: React.FC = () => {
               onChangeText={onChange}
               value={value}
               isError={errors.email || errorMessage ? true : false}
+              errorMessage={errors.email?.type === 'required' ? 'Required Email' : ''}
               placeholder="Email"
               keyboardType="email-address"
               textContentType="emailAddress"
@@ -85,6 +74,7 @@ const LogInScreen: React.FC = () => {
               onChangeText={onChange}
               value={value}
               isError={errors.password ? true : false}
+              errorMessage={errors.password?.type === 'required' ? 'Required Password' : ''}
               secureTextEntry={true}
               placeholder="Password"
             />
@@ -97,7 +87,7 @@ const LogInScreen: React.FC = () => {
           <StyledText> I forget my password </StyledText>
         </StyledTouchableOpacity>
 
-        <Button onPress={() => loginValidation(getValues())}>
+        <Button onPress={handleSubmit(loginHandler)}>
           Log In{" "}
           <AntDesign
             name="arrowright"
