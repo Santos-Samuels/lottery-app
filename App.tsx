@@ -1,9 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
 import AuthStack from '@stacks/AuthStack';
+import { StackTheme } from '@stacks/DefaultTheme';
 
 export default function App() {
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={StackTheme}>
       <AuthStack />
     </NavigationContainer>
   );

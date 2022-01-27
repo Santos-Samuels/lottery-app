@@ -3,7 +3,7 @@ import ForgetPasswordScreen from "./HomeScreen";
 import LogInScreen from "./LogInScreen";
 import NewBetScreen from "./NewBetScreen";
 import SignUpScreen from "./SignUpScreen";
-import UserScreen from "./UserScreen";
+import AccountScreen from "./AccountScreen";
 
 export {
   LogInScreen,
@@ -11,5 +11,5 @@ export {
   ForgetPasswordScreen,
   HomeScreen,
   NewBetScreen,
-  UserScreen
+  AccountScreen
 }

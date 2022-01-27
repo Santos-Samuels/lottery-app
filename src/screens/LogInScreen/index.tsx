@@ -1,10 +1,13 @@
 import { View, Text } from "react-native"
+import { AuthContainer, AuthContent } from '@components/index';
 
 const LogInScreen: React.FC = () => {
   return (
-    <View>
-      <Text> LogInScreen </Text>
-    </View>
+    <AuthContainer>
+      <AuthContent>
+        <Text> LogInScreen </Text>
+      </AuthContent>
+    </AuthContainer>
   )
 }
 

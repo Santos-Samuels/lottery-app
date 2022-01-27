@@ -1,5 +1,7 @@
-import AuthContainer from "./AuthContainer";
+import AuthContainer from "./Layout/AuthContainer";
+import AuthContent from "./Layout/AuthContent";
 
 export {
-  AuthContainer
+  AuthContainer,
+  AuthContent
 }
