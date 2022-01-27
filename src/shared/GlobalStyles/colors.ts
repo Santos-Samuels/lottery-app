@@ -1,5 +1,8 @@
 export const colors = {
+  primary: '#B5C401',
+  text: '#707070',
+  background: '#F7F7F7',
   border: '#DDDDDD',
   shadow: '#00000014',
-  background: '#F7F7F7',
+  error: '#FF3333',
 }

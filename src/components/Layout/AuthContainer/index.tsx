@@ -1,10 +1,10 @@
-import { View } from "./style"
+import { StyledView } from "./style"
 
 const AuthContainer: React.FC = (props) => {
   return (
-    <View>
+    <StyledView>
       {props.children}
-    </View>
+    </StyledView>
   )
 }
 
