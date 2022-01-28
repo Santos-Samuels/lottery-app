@@ -13,11 +13,14 @@ import { AntDesign } from "@expo/vector-icons";
 import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
 import { IRegisterInfo } from "@shared/interfaces";
+import { AuthScreenProp } from "@stacks/index";
+import { useNavigation } from "@react-navigation/native";
 
 const formInitialValues: IRegisterInfo = { name: "", email: "", password: "" };
 
 const SignUpScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const navigation = useNavigation<AuthScreenProp>()
   const {
     control,
     handleSubmit,
@@ -115,7 +118,7 @@ const SignUpScreen: React.FC = () => {
         </Button>
       </AuthContent>
 
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <Title>
           <AntDesign
             name="arrowleft"

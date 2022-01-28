@@ -13,11 +13,14 @@ import { AntDesign } from "@expo/vector-icons";
 import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
 import { IResetPasswordInfo } from "@shared/interfaces";
+import { AuthScreenProp } from "@stacks/index";
+import { useNavigation } from "@react-navigation/native";
 
 const formInitialValues: IResetPasswordInfo = { email: "" };
 
 const ResetPasswordScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const navigation = useNavigation<AuthScreenProp>()
   const {
     control,
     handleSubmit,
@@ -76,7 +79,7 @@ const ResetPasswordScreen: React.FC = () => {
         </Button>
       </AuthContent>
 
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => navigation.goBack()}>
         <Title>
           <AntDesign
             name="arrowleft"

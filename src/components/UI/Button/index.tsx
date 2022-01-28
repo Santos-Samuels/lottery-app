@@ -2,7 +2,7 @@ import { StyledButton, StyledTouchableOpacity } from './style'
 
 interface IProps {
   onPress: () => void;
-  isLoading: boolean
+  isLoading?: boolean
 }
 
 const Button: React.FC<IProps> = (props) => {

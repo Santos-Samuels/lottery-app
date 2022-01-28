@@ -3,7 +3,7 @@ import { View, Text } from "react-native"
 const ForgetPasswordScreen: React.FC = () => {
   return (
     <View>
-      <Text> ForgetPasswordScreen </Text>
+      <Text> HomeScreen </Text>
     </View>
   )
 }

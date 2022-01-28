@@ -15,6 +15,9 @@ import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
 import { ILoginInfo, IRequestStatus, IUser } from "@shared/interfaces";
 import { LoginUser } from "@shared/services";
+import { useNavigation } from "@react-navigation/native";
+import { AuthScreenProp, MainScreenProp } from "@stacks/index";
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const formInitialValues: ILoginInfo = { email: "", password: "" };
 const InitialRequestStatus: IRequestStatus = { loading: false, success: false, error: '' };
@@ -22,6 +25,8 @@ const InitialRequestStatus: IRequestStatus = { loading: false, success: false, e
 const LogInScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loginStatus, setLoginStatus] = useState<IRequestStatus>(InitialRequestStatus);
+  const authNavigation = useNavigation<AuthScreenProp>()
+  const mainNavigation = useNavigation<MainScreenProp>()
   const {
     control,
     handleSubmit,
@@ -63,6 +68,9 @@ const LogInScreen: React.FC = () => {
   useEffect(() => {
     if (loginStatus.loading)
       loginHandler()
+
+    if (loginStatus.success)
+      mainNavigation.navigate('HomeScreen')
 
   }, [loginStatus])
 
@@ -110,7 +118,7 @@ const LogInScreen: React.FC = () => {
 
         {errorMessage ? <AuthError message={errorMessage} /> : null}
 
-        <StyledTouchableOpacity onPress={() => {}}>
+        <StyledTouchableOpacity onPress={() => authNavigation.navigate('ResetPasswordScreen')}>
           <StyledText> I forget my password </StyledText>
         </StyledTouchableOpacity>
 
@@ -125,7 +133,7 @@ const LogInScreen: React.FC = () => {
         </Button>
       </AuthContent>
 
-      <TouchableOpacity onPress={() => {}}>
+      <TouchableOpacity onPress={() => authNavigation.navigate('SignUpScreen')}>
         <Title>
           Sign Up{" "}
           <AntDesign
