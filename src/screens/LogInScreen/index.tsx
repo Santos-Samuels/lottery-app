@@ -8,38 +8,65 @@ import {
 } from "@components/index";
 import { useForm, Controller } from "react-hook-form";
 import { StyledText, StyledTouchableOpacity } from "./style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { emailValidation } from "@shared/utils";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
-import { ILoginInfo } from "@shared/interfaces";
+import { ILoginInfo, IRequestStatus, IUser } from "@shared/interfaces";
+import { LoginUser } from "@shared/services";
 
 const formInitialValues: ILoginInfo = { email: "", password: "" };
+const InitialRequestStatus: IRequestStatus = { loading: false, success: false, error: '' };
 
 const LogInScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
+  const [loginStatus, setLoginStatus] = useState<IRequestStatus>(InitialRequestStatus);
   const {
     control,
     handleSubmit,
     formState: { errors },
     setError,
-    reset
+    reset,
+    getValues
   } = useForm<ILoginInfo>({
     defaultValues: formInitialValues,
   });
 
-  const loginHandler = (data: ILoginInfo) => {
+  const enteredInfoValidation = (data: ILoginInfo) => {
     if (!emailValidation(data.email)) {
       setError("email", { message: "Invalid email" })
-      setErrorMessage("Invalid name");
-      return false;
+      setErrorMessage("Invalid email");
+      return
     }
 
-    reset(formInitialValues)
-    setErrorMessage("");
-    console.log(data);
+    setLoginStatus(prevInfo => {return { ...prevInfo, loading: true }})
+  }
+
+  const loginHandler = async () => {
+    const data = getValues()
+    const response = await LoginUser(data);
+
+    if (typeof response !== 'string') {
+      const user = response as IUser
+      localStorage.setItem('TOKEN', JSON.stringify(user.token))
+      setLoginStatus(prevInfo => {return { ...prevInfo, loading: false, success: true }})
+      setErrorMessage("");
+      reset(formInitialValues)
+      return
+    }
+      
+    setLoginStatus(prevInfo => {return { ...prevInfo, loading: false, error: 'Incorret email or password' }})
+    setErrorMessage("Incorret email or password");
   };
+
+  useEffect(() => {
+    if (loginStatus.loading)
+      loginHandler()
+
+  }, [loginStatus])
+
+  console.log(loginStatus)
 
   return (
     <AuthContainer>
@@ -87,7 +114,7 @@ const LogInScreen: React.FC = () => {
           <StyledText> I forget my password </StyledText>
         </StyledTouchableOpacity>
 
-        <Button onPress={handleSubmit(loginHandler)}>
+        <Button onPress={handleSubmit(enteredInfoValidation)} isLoading={loginStatus.loading}>
           Log In{" "}
           <AntDesign
             name="arrowright"

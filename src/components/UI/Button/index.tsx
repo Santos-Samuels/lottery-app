@@ -1,15 +1,15 @@
-import { TouchableOpacity } from "react-native"
-import { StyledButton } from './style'
+import { StyledButton, StyledTouchableOpacity } from './style'
 
 interface IProps {
   onPress: () => void;
+  isLoading: boolean
 }
 
 const Button: React.FC<IProps> = (props) => {
   return (
-    <TouchableOpacity onPress={props.onPress}>
+    <StyledTouchableOpacity onPress={props.onPress} disabled={props.isLoading}>
       <StyledButton>{ props.children }</StyledButton>
-    </TouchableOpacity>
+    </StyledTouchableOpacity>
   )
 }
 

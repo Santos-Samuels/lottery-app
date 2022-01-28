@@ -12,8 +12,9 @@ import { emailValidation } from "@shared/utils";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
+import { IResetPasswordInfo } from "@shared/interfaces";
 
-const formInitialValues = { email: "" };
+const formInitialValues: IResetPasswordInfo = { email: "" };
 
 const ResetPasswordScreen: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
@@ -23,11 +24,11 @@ const ResetPasswordScreen: React.FC = () => {
     formState: { errors },
     reset,
     setError
-  } = useForm({
+  } = useForm<IResetPasswordInfo>({
     defaultValues: formInitialValues,
   });
 
-  const signupHandler = (data: { email: string }) => {
+  const signupHandler = (data: IResetPasswordInfo) => {
     if (!emailValidation(data.email)) {
       setError("email", { message: "Invalid email" })
       setErrorMessage("Invalid email");

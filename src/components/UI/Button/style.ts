@@ -9,3 +9,7 @@ export const StyledButton = styled.Text`
   margin-vertical: 30px;
   text-align: center;
 `
+
+export const StyledTouchableOpacity = styled.TouchableOpacity`
+  width: 100%;
+`

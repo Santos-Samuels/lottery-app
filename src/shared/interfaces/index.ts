@@ -9,6 +9,10 @@ export interface IRegisterInfo {
   password: string;
 }
 
+export interface IResetPasswordInfo {
+  email: string;
+}
+
 export interface NewUser {
   id: number;
   email: string;
@@ -27,7 +31,7 @@ export interface IBet {
   id: number;
 }
 
-export interface User {
+export interface IUser {
   bets?: IBet[]
   id: number;
   email: string;
@@ -38,6 +42,12 @@ export interface User {
   token: string | null;
   token_created_at: string | null;
   picture: string | null;
+}
+
+export interface IRequestStatus {
+  loading: boolean;
+  success: boolean;
+  error: string
 }
 
 export interface Token {
