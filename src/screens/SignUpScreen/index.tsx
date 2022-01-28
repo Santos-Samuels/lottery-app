@@ -12,7 +12,7 @@ import { emailValidation, usernameValidation } from "@shared/utils";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "@shared/GlobalStyles/colors";
 import { TouchableOpacity } from "react-native";
-import { IRegisterInfo } from "./interface";
+import { IRegisterInfo } from "@shared/interfaces";
 
 const formInitialValues: IRegisterInfo = { name: "", email: "", password: "" };
 
