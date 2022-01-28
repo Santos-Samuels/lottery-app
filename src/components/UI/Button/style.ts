@@ -1,4 +1,4 @@
-import { colors } from "@shared/GlobalStyles/colors";
+import { colors } from "@shared/globalStyles/colors";
 import styled from "styled-components/native";
 
 export const StyledButton = styled.Text`

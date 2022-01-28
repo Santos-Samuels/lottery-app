@@ -10,7 +10,7 @@ import { useForm, Controller } from "react-hook-form";
 import { useState } from "react";
 import { emailValidation } from "@shared/utils";
 import { AntDesign } from "@expo/vector-icons";
-import { colors } from "@shared/GlobalStyles/colors";
+import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
 
 const formInitialValues = { email: "" };
