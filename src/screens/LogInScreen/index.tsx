@@ -14,10 +14,9 @@ import { AntDesign } from "@expo/vector-icons";
 import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
 import { ILoginInfo, IRequestStatus, IToken, IUser } from "@shared/interfaces";
-import { LoginUser } from "@shared/services";
 import { useNavigation } from "@react-navigation/native";
 import { AuthScreenProp, MainScreenProp } from "@stacks/index";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { login } from "@store/actions/authActions";
 

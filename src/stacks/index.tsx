@@ -3,6 +3,10 @@ import AuthStack, { AuthStackParamList } from "@stacks/AuthStack";
 import MainStack, { MainStackParamList } from "./MainStack";
 import { getToken } from '@shared/utils';
 import { useEffect, useState } from 'react';
+import { Loading } from '@components/index';
+import { requestLotteryRules } from '@store/actions/rulesActions';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '@store/index';
 
 export type AuthScreenProp = NativeStackNavigationProp<AuthStackParamList, 'LogInScreen'>;
 export type MainScreenProp = NativeStackNavigationProp<MainStackParamList, 'HomeScreen'>;
@@ -16,6 +20,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootStack: React.FC = () => {
   const [token, setToken] = useState('')
+  const dispatch = useDispatch()
+  const rules = useSelector((states: RootState) => states.rules)
 
   const getTokenHandler = async () => {
     const response = await getToken()
@@ -26,7 +32,15 @@ export const RootStack: React.FC = () => {
 
   useEffect(() => {
     getTokenHandler()
-  })
+    
+    if (!rules)
+      requestLotteryRules(dispatch)
+
+    console.log(rules)
+  }, [rules])
+  
+  if (!rules)
+    return <Loading />
   
   if (!token) {
     return (
