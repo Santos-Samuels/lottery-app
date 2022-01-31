@@ -7,7 +7,7 @@ import {
   Title,
 } from "@components/index";
 import { useForm, Controller } from "react-hook-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { emailValidation, usernameValidation } from "@shared/utils";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "@shared/globalStyles/colors";

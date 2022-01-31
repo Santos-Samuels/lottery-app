@@ -1,6 +1,8 @@
 import { createNativeStackNavigator, NativeStackNavigationProp } from '@react-navigation/native-stack';
 import AuthStack, { AuthStackParamList } from "@stacks/AuthStack";
 import MainStack, { MainStackParamList } from "./MainStack";
+import { getToken } from '@shared/utils';
+import { useEffect, useState } from 'react';
 
 export type AuthScreenProp = NativeStackNavigationProp<AuthStackParamList, 'LogInScreen'>;
 export type MainScreenProp = NativeStackNavigationProp<MainStackParamList, 'HomeScreen'>;
@@ -13,9 +15,20 @@ export type RootStackParamList = {
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const RootStack: React.FC = () => {
-  const TOKEN = localStorage.getItem('TOKEN') === 'undefined' ? null : localStorage.getItem('TOKEN')
+  const [token, setToken] = useState('')
 
-  if (!TOKEN) {
+  const getTokenHandler = async () => {
+    const response = await getToken()
+    
+    if (response)
+      setToken(response)
+  }
+
+  useEffect(() => {
+    getTokenHandler()
+  })
+  
+  if (!token) {
     return (
       <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Auth">
         <Stack.Screen name="Auth" component={AuthStack} />

@@ -13,30 +13,34 @@ import { emailValidation } from "@shared/utils";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
-import { ILoginInfo, IRequestStatus, IUser } from "@shared/interfaces";
+import { ILoginInfo, IRequestStatus, IToken, IUser } from "@shared/interfaces";
 import { LoginUser } from "@shared/services";
 import { useNavigation } from "@react-navigation/native";
 import { AuthScreenProp, MainScreenProp } from "@stacks/index";
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useDispatch, useSelector } from 'react-redux';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { login } from "@store/actions/authActions";
 
 const formInitialValues: ILoginInfo = { email: "", password: "" };
 const InitialRequestStatus: IRequestStatus = { loading: false, success: false, error: '' };
 
 const LogInScreen: React.FC = () => {
-  const [errorMessage, setErrorMessage] = useState("");
-  const [loginStatus, setLoginStatus] = useState<IRequestStatus>(InitialRequestStatus);
-  const authNavigation = useNavigation<AuthScreenProp>()
-  const mainNavigation = useNavigation<MainScreenProp>()
   const {
     control,
     handleSubmit,
     formState: { errors },
     setError,
     reset,
-    getValues
+    getValues,
+    clearErrors
   } = useForm<ILoginInfo>({
     defaultValues: formInitialValues,
   });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [loginStatus, setLoginStatus] = useState<IRequestStatus>(InitialRequestStatus);
+  const dispatch = useDispatch();
+  const authNavigation = useNavigation<AuthScreenProp>()
+  const mainNavigation = useNavigation<MainScreenProp>()
 
   const enteredInfoValidation = (data: ILoginInfo) => {
     if (!emailValidation(data.email)) {
@@ -45,16 +49,16 @@ const LogInScreen: React.FC = () => {
       return
     }
 
+    clearErrors()
     setLoginStatus(prevInfo => {return { ...prevInfo, loading: true }})
   }
 
   const loginHandler = async () => {
     const data = getValues()
-    const response = await LoginUser(data);
+    const TOKEN = await login(dispatch, data);
 
-    if (typeof response !== 'string') {
-      const user = response as IUser
-      localStorage.setItem('TOKEN', JSON.stringify(user.token))
+    if (TOKEN) {
+      await AsyncStorage.setItem('TOKEN', JSON.stringify(TOKEN))
       setLoginStatus(prevInfo => {return { ...prevInfo, loading: false, success: true }})
       setErrorMessage("");
       reset(formInitialValues)
@@ -69,12 +73,10 @@ const LogInScreen: React.FC = () => {
     if (loginStatus.loading)
       loginHandler()
 
-    if (loginStatus.success)
+    if (loginStatus.success) 
       mainNavigation.navigate('HomeScreen')
 
   }, [loginStatus])
-
-  console.log(loginStatus)
 
   return (
     <AuthContainer>

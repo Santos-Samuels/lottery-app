@@ -50,7 +50,7 @@ export interface IRequestStatus {
   error: string
 }
 
-export interface Token {
+export interface IToken {
   type: string;
   token: string;
   expires_at: string;
