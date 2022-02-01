@@ -6,6 +6,7 @@ export const UPDATE_CURRENT_GAME_ID = 'UPDATE_CURRENT_GAME_ID'
 export type RuleState = {
   lotteryRules: ILotteryRoles;
   currentGameId: number;
+  currentGameRule: IGameRole;
 } | null
 
 type RequestLotteryRules = {

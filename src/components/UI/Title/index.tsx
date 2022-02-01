@@ -3,6 +3,7 @@ import { StyledText } from './style'
 interface IProps {
   size: string;
   uppercase?: boolean;
+  bold?: boolean
 }
 
 const Title: React.FC<IProps> = (props) => {

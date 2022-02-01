@@ -8,5 +8,5 @@ interface IProps {
 export const StyledText = styled.Text<IProps>`
   ${props => props.bold ? 'font-weight: 700;' : ''}
   font-style: italic;
-  color: ${colors.text};
+  color: ${colors.secondaryText};
 `
