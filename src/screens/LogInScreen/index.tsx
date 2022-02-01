@@ -13,7 +13,7 @@ import { emailValidation } from "@shared/utils";
 import { AntDesign } from "@expo/vector-icons";
 import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
-import { ILoginInfo, IRequestStatus, IToken, IUser } from "@shared/interfaces";
+import { ILoginInfo, IRequestStatus } from "@shared/interfaces";
 import { useNavigation } from "@react-navigation/native";
 import { AuthScreenProp, MainScreenProp } from "@stacks/index";
 import { useDispatch } from 'react-redux';
@@ -79,7 +79,7 @@ const LogInScreen: React.FC = () => {
 
   return (
     <AuthContainer>
-      <Title>Authentication</Title>
+      <Title size="lg">Authentication</Title>
 
       <AuthContent>
         <Controller
@@ -135,7 +135,7 @@ const LogInScreen: React.FC = () => {
       </AuthContent>
 
       <TouchableOpacity onPress={() => authNavigation.navigate('SignUpScreen')}>
-        <Title>
+        <Title size="lg">
           Sign Up{" "}
           <AntDesign
             name="arrowright"

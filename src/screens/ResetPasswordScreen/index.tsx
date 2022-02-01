@@ -45,7 +45,7 @@ const ResetPasswordScreen: React.FC = () => {
 
   return (
     <AuthContainer>
-      <Title>Reset password</Title>
+      <Title size="lg">Reset password</Title>
 
       <AuthContent>
         <Controller
@@ -80,7 +80,7 @@ const ResetPasswordScreen: React.FC = () => {
       </AuthContent>
 
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Title>
+        <Title size="lg">
           <AntDesign
             name="arrowleft"
             style={{ marginRight: 5 }}

@@ -1,10 +1,17 @@
-import { AppContainer, GameTypeButtonList } from "@components/index"
-import { Text } from "react-native"
+import { AppContainer, GameTypeButtonList, Title, Text, EmpetyMessage } from "@components/index"
+import { StyledView, StyledText } from './styled'
 
 const ForgetPasswordScreen: React.FC = () => {
   return (
     <AppContainer>
-      <GameTypeButtonList isToggleable={false} />
+      <Title size="md" uppercase={true} >Recent games</Title>
+      
+      <StyledView>
+        <StyledText>Filters</StyledText>
+        <GameTypeButtonList isToggleable={false} />
+      </StyledView>
+
+      <EmpetyMessage>Empety Recent Games</EmpetyMessage>
     </AppContainer>
   )
 }

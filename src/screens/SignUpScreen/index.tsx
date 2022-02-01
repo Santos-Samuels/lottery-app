@@ -51,7 +51,7 @@ const SignUpScreen: React.FC = () => {
 
   return (
     <AuthContainer>
-      <Title>Registration</Title>
+      <Title size="lg">Registration</Title>
 
       <AuthContent>
       <Controller
@@ -119,7 +119,7 @@ const SignUpScreen: React.FC = () => {
       </AuthContent>
 
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Title>
+        <Title size="lg">
           <AntDesign
             name="arrowleft"
             style={{ marginRight: 5 }}
