@@ -1,3 +1,5 @@
+import GameTypeButtonList from "./Game/GameTypeButtonList";
+import AppContainer from "./Layout/AppContainer";
 import AuthContainer from "./Layout/AuthContainer";
 import AuthContent from "./Layout/AuthContent";
 import AuthError from "./UI/AuthError";
@@ -13,5 +15,7 @@ export {
   Button,
   AuthError,
   Title,
-  Loading
+  Loading,
+  AppContainer,
+  GameTypeButtonList
 }

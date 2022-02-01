@@ -1,10 +1,11 @@
-import { View, Text } from "react-native"
+import { AppContainer, GameTypeButtonList } from "@components/index"
+import { Text } from "react-native"
 
 const ForgetPasswordScreen: React.FC = () => {
   return (
-    <View>
-      <Text> HomeScreen </Text>
-    </View>
+    <AppContainer>
+      <GameTypeButtonList isToggleable={false} />
+    </AppContainer>
   )
 }
 
