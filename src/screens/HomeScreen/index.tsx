@@ -11,7 +11,7 @@ const ForgetPasswordScreen: React.FC = () => {
         <GameTypeButtonList isToggleable={false} />
       </StyledView>
 
-      <EmpetyMessage>Empety Recent Games</EmpetyMessage>
+      <EmpetyMessage message="Empety recent games" />
     </AppContainer>
   )
 }
