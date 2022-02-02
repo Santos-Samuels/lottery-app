@@ -7,11 +7,11 @@ export const CLEAR_FILTERS = 'CLEAR_FILTERS'
 export type RecentGamesState = { 
   recentGames: IBet[];
   filters: string[]
-} | null
+}
 
 type RequestRecentGames = {
   type: typeof REQUEST_RECENT_GAMES;
-  payload: IBet[]
+  payload: RecentGamesState
 }
 
 type UpdateFilters = {

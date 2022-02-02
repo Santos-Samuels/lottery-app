@@ -1,5 +1,5 @@
 import { IGameRole } from "@shared/interfaces"
-import { updateFilters } from "@store/actions/recentGamesActions"
+import { requestRecentGames, updateFilters } from "@store/actions/recentGamesActions"
 import { updateCurrentGameId } from "@store/actions/rulesActions"
 import { RootState } from "@store/index"
 import { RecentGamesState } from "@store/types/recentGamesType"
@@ -17,9 +17,14 @@ interface IGameTypeButton {
 const GameTypeButton: React.FC<IGameTypeButton> = (props) => {
   const [isActive, setIsActive] = useState(false)
   const rules = useSelector((states: RootState) => states.rules as RuleState)
-  const recentGamesState = useSelector((states: RootState) => states.rules as RecentGamesState)
+  const recentGamesState = useSelector((states: RootState) => states.recentGames as RecentGamesState)
   const dispatch = useDispatch()
   
+  const updateFilterHandler = () => {
+    setIsActive(!isActive)
+    updateFilters(dispatch, recentGamesState.filters, props.rule.type)
+  }
+
   if (props.isToggleable) {
     return (
       <TouchableWithoutFeedback onPress={() => updateCurrentGameId(dispatch, rules!.lotteryRules, props.rule.id)}>
@@ -33,7 +38,7 @@ const GameTypeButton: React.FC<IGameTypeButton> = (props) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => {setIsActive(!isActive), updateFilters(dispatch, recentGamesState!.filters, props.rule.type)}}>
+    <TouchableWithoutFeedback onPress={updateFilterHandler}>
       <ButtonContent color={props.rule.color} isActive={isActive}>
         <StyledText color={props.rule.color} isActive={isActive}>
           {props.rule.type}

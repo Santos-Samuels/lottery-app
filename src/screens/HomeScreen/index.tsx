@@ -12,11 +12,10 @@ const InitialRequestStatus: IRequestStatus = { loading: true, success: false, er
 const ForgetPasswordScreen: React.FC = () => {
   const [requestStatus, setRequestStatus] = useState<IRequestStatus>(InitialRequestStatus);
   const dispatch = useDispatch()
-  const recentGamesState = useSelector((states: RootState) => states.rules as RecentGamesState)
+  const recentGamesState = useSelector((states: RootState) => states.recentGames as RecentGamesState)
   
   const updateRecentGames = async () => {
-    const response = await requestRecentGames(dispatch, recentGamesState!.filters)
-
+    const response = await requestRecentGames(dispatch, recentGamesState.filters)
     if (typeof response !== 'boolean') {
       setRequestStatus(prev => {return {...prev, loading: false, success: true}})
     }
@@ -24,12 +23,12 @@ const ForgetPasswordScreen: React.FC = () => {
   }
 
   useEffect(() => {
-
     if (requestStatus.loading)
       updateRecentGames()
   }, [])
 
   if (requestStatus.loading) return <Loading />
+  console.log('asd',recentGamesState.filters)
 
   return (
     <AppContainer>
