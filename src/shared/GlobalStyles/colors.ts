@@ -6,4 +6,5 @@ export const colors = {
   border: '#DDDDDD',
   shadow: '#00000014',
   error: '#FF3333',
+  button: '#27C383'
 }

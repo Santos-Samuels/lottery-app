@@ -10,6 +10,7 @@ import Title from "./UI/Title";
 import Text from "./UI/Text";
 import EmpetyMessage from "./UI/EmpetyMessage";
 import BallList from "./Game/BallList";
+import ActionButtonList from "./Game/ActionButtonList";
 
 export {
   AuthContainer,
@@ -23,5 +24,6 @@ export {
   GameTypeButtonList,
   Text,
   EmpetyMessage,
-  BallList
+  BallList,
+  ActionButtonList
 }

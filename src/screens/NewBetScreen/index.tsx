@@ -3,7 +3,8 @@ import {
   GameTypeButtonList,
   Title,
   Text,
-  BallList
+  BallList,
+  ActionButtonList
 } from "@components/index";
 import { RootState } from "@store/index";
 import { RuleState } from "@store/types/rulesTypes";
@@ -17,7 +18,7 @@ const NewBetScreen: React.FC = () => {
     <AppContainer>
       <StyledView>
         <Title size="md" uppercase={true}>
-          New bet
+          New bet{' '}
         </Title>
         <StyledText>for {rules!.currentGameRule.type}</StyledText>
       </StyledView>
@@ -32,7 +33,13 @@ const NewBetScreen: React.FC = () => {
         <Text>{rules!.currentGameRule.description}</Text>
       </Content>
 
-      <BallList />
+      <Content>
+        <BallList />
+      </Content>
+
+      <Content>
+        <ActionButtonList />
+      </Content>
     </AppContainer>
   );
 };

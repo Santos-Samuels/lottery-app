@@ -19,7 +19,7 @@ const Ball: React.FC<IProps> = (props) => {
         color={rules!.currentGameRule.color}
         isActive={isActive}
       >
-        <StyledText>{props.number}</StyledText>
+        <StyledText>{props.number.toString().padStart(2, '0')}</StyledText>
       </StyledView>
     </TouchableWithoutFeedback>
   );
