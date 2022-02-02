@@ -71,21 +71,14 @@ export interface ILotteryRoles {
   types: IGameRole[]
 }
 
-export interface IRequestInfo<T, D> {
-  loading: boolean;
-  data: T;
-  error: D,
-  success: boolean
-}
-
 export interface IApiPostGames {
   game_id: number;
   numbers: number[]
 }
 
-export interface IBetError{
-  isError: boolean;
-  message: string;
-  icon: string;
-  color: string;
-}
+// export interface IBetError{
+//   isError: boolean;
+//   message: string;
+//   icon: string;
+//   color: string;
+// }

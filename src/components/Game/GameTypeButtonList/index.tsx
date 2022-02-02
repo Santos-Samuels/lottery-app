@@ -9,7 +9,7 @@ const GameTypeButtonList: React.FC<{isToggleable: boolean}> = (props) => {
 
   return (
     <ButtonsContainer>
-      { rules!.lotteryRules.types.map(rule => <GameTypeButton key={rule.id} id={rule.id} title={rule.type} color={rule.color} isToggleable={props.isToggleable} />) }
+      { rules!.lotteryRules.types.map(rule => <GameTypeButton key={rule.id} rule={rule} isToggleable={props.isToggleable} />) }
     </ButtonsContainer>
   )
 }

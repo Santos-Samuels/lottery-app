@@ -1,5 +1,8 @@
+import { IGameRole } from "@shared/interfaces"
+import { updateFilters } from "@store/actions/recentGamesActions"
 import { updateCurrentGameId } from "@store/actions/rulesActions"
 import { RootState } from "@store/index"
+import { RecentGamesState } from "@store/types/recentGamesType"
 import { RuleState } from "@store/types/rulesTypes"
 import { useState } from "react"
 import { TouchableWithoutFeedback } from "react-native"
@@ -7,23 +10,22 @@ import { useDispatch, useSelector } from "react-redux"
 import { ButtonContent, StyledText } from "./style"
 
 interface IGameTypeButton {
-  id: number;
-  title: string;
-  color: string;
+  rule: IGameRole
   isToggleable: boolean;
 }
 
 const GameTypeButton: React.FC<IGameTypeButton> = (props) => {
   const [isActive, setIsActive] = useState(false)
   const rules = useSelector((states: RootState) => states.rules as RuleState)
+  const recentGamesState = useSelector((states: RootState) => states.rules as RecentGamesState)
   const dispatch = useDispatch()
-
+  
   if (props.isToggleable) {
     return (
-      <TouchableWithoutFeedback onPress={() => updateCurrentGameId(dispatch, rules!.lotteryRules, props.id)}>
-        <ButtonContent color={props.color} isActive={rules!.currentGameId === props.id}>
-          <StyledText color={props.color} isActive={rules!.currentGameId === props.id}>
-            {props.title}
+      <TouchableWithoutFeedback onPress={() => updateCurrentGameId(dispatch, rules!.lotteryRules, props.rule.id)}>
+        <ButtonContent color={props.rule.color} isActive={rules!.currentGameId === props.rule.id}>
+          <StyledText color={props.rule.color} isActive={rules!.currentGameId === props.rule.id}>
+            {props.rule.type}
           </StyledText>
         </ButtonContent>
       </TouchableWithoutFeedback>
@@ -31,10 +33,10 @@ const GameTypeButton: React.FC<IGameTypeButton> = (props) => {
   }
 
   return (
-    <TouchableWithoutFeedback onPress={() => setIsActive(!isActive)}>
-      <ButtonContent color={props.color} isActive={isActive}>
-        <StyledText color={props.color} isActive={isActive}>
-          {props.title}
+    <TouchableWithoutFeedback onPress={() => {setIsActive(!isActive), updateFilters(dispatch, recentGamesState!.filters, props.rule.type)}}>
+      <ButtonContent color={props.rule.color} isActive={isActive}>
+        <StyledText color={props.rule.color} isActive={isActive}>
+          {props.rule.type}
         </StyledText>
       </ButtonContent>
     </TouchableWithoutFeedback>

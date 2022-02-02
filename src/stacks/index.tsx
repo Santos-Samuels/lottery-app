@@ -36,8 +36,6 @@ export const RootStack: React.FC = () => {
     
     if (!rules)
       requestLotteryRules(dispatch)
-
-    console.log(rules)
   }, [rules])
   
   if (!rules)
