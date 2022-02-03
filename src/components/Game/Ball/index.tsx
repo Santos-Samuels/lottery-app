@@ -1,23 +1,31 @@
 import { RootState } from "@store/index";
 import { RuleState } from "@store/types/rulesTypes";
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { StyledView, StyledText } from "./style";
 import { TouchableWithoutFeedback } from "react-native"
+import { BetState } from "@store/types/betTypes";
+import { updateNumbers } from "@store/actions/betActions";
 
 interface IProps {
   number: number;
 }
 
 const Ball: React.FC<IProps> = (props) => {
-  const [isActive, setIsActive] = useState(false);
   const rules = useSelector((states: RootState) => states.rules as RuleState);
+  const bet = useSelector((states: RootState) => states.bet as BetState);
+  const dispatch = useDispatch()
+
+  const updateNumberHandler = () => {
+    updateNumbers(dispatch, bet, props.number)
+  }
+
 
   return (
-    <TouchableWithoutFeedback onPress={() => setIsActive(!isActive)}>
+    <TouchableWithoutFeedback onPress={updateNumberHandler}>
       <StyledView
         color={rules!.currentGameRule.color}
-        isActive={isActive}
+        isActive={bet.includes(props.number)}
       >
         <StyledText>{props.number.toString().padStart(2, '0')}</StyledText>
       </StyledView>

@@ -1,4 +1,5 @@
 import { IGameRole } from "@shared/interfaces"
+import { clearNumbers } from "@store/actions/betActions"
 import { requestRecentGames, updateFilters } from "@store/actions/recentGamesActions"
 import { updateCurrentGameId } from "@store/actions/rulesActions"
 import { RootState } from "@store/index"
@@ -24,10 +25,15 @@ const GameTypeButton: React.FC<IGameTypeButton> = (props) => {
     setIsActive(!isActive)
     updateFilters(dispatch, recentGamesState.filters, props.rule.type)
   }
+  
+  const updateCurrentGameHandler = () => {
+    updateCurrentGameId(dispatch, rules!.lotteryRules, props.rule.id)
+    clearNumbers(dispatch)
+  }
 
   if (props.isToggleable) {
     return (
-      <TouchableWithoutFeedback onPress={() => updateCurrentGameId(dispatch, rules!.lotteryRules, props.rule.id)}>
+      <TouchableWithoutFeedback onPress={updateCurrentGameHandler}>
         <ButtonContent color={props.rule.color} isActive={rules!.currentGameId === props.rule.id}>
           <StyledText color={props.rule.color} isActive={rules!.currentGameId === props.rule.id}>
             {props.rule.type}
