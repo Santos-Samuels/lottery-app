@@ -30,7 +30,7 @@ const ForgetPasswordScreen: React.FC = () => {
   if (requestStatus.loading) return <Loading />
 
   return (
-    <AppContainer>
+    <AppContainer isScrollable={false}>
       <Title size="md" uppercase={true} >Recent games</Title>
       
       <StyledView>

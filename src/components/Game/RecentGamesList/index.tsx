@@ -20,7 +20,7 @@ const RecentGamesList: React.FC = () => {
         data={recentGamesState.recentGames}
         keyExtractor={(item) => item.id.toString()}
         renderItem={(itemData) => <RecentGame recentGame={itemData.item} />}
-      ></FlatList>
+      />
     </View>
   );
 };

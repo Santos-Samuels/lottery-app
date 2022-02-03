@@ -10,7 +10,7 @@ interface IProps {
   recentGame: IBet;
 }
 
-const RecentGame: React.FC<IProps> = (props) => {
+const CartItem: React.FC<IProps> = (props) => {
   const rules = useSelector((states: RootState) => states.rules as RuleState);
   const gameRule = rules!.lotteryRules.types.find(rule => rule.id === props.recentGame.game_id)
   const formatedNumbers = formatStringArray(props.recentGame.choosen_numbers)
@@ -26,4 +26,4 @@ const RecentGame: React.FC<IProps> = (props) => {
   );
 };
 
-export default RecentGame;
+export default CartItem;

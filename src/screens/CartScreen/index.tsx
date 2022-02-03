@@ -1,9 +1,6 @@
 import {
-  AppContainer,
-  ActionButton,
   Title,
-  Text,
-  EmpetyMessage,
+  CartList
 } from "@components/index";
 import { View } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
@@ -12,28 +9,40 @@ import {
   Container,
   ButtonContainer,
   ButtonContent,
-  StyledView,
   StyledText,
+  StyledView,
   StyledViewRow
 } from "./styled";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@store/index";
+import { CartState } from "@store/types/cartTypes";
+import { formatMoney } from "@shared/utils";
+import { clearCart } from "@store/actions/cartActions";
 
 const CartScreen: React.FC = () => {
+  const cart = useSelector((states: RootState) => states.cart as CartState);
+  const dispatch = useDispatch()
+  
+  const checkOut = () => {
+    clearCart(dispatch)
+  }
+
   return (
     <Container>
       <View>
         <Title size="md" uppercase={true}>
           Cart
         </Title>
-        <EmpetyMessage message="Cart is still empety" />
+        <CartList />
       </View>
 
       <StyledView>
         <StyledViewRow>
           <Title size="md" uppercase={true}>Cart</Title>
-          <StyledText>TOTAL: R$ 0,00</StyledText>
+          <StyledText>TOTAL: {formatMoney(cart.totalAmount)}</StyledText>
         </StyledViewRow>
 
-        <ButtonContainer>
+        <ButtonContainer onPress={checkOut}>
           <ButtonContent>Save</ButtonContent>
           <AntDesign
             name="arrowright"

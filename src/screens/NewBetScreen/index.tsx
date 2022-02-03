@@ -15,7 +15,7 @@ const NewBetScreen: React.FC = () => {
   const rules = useSelector((states: RootState) => states.rules as RuleState);
 
   return (
-    <AppContainer>
+    <AppContainer isScrollable={true}>
       <StyledView>
         <Title size="md" uppercase={true}>
           New bet{' '}

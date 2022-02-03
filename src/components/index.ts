@@ -13,6 +13,7 @@ import BallList from "./Game/BallList";
 import ActionButtonList from "./Game/ActionButtonList";
 import ActionButton from "./Game/ActionButton";
 import RecentGamesList from "./Game/RecentGamesList";
+import CartList from "./Game/CartList";
 
 export {
   AuthContainer,
@@ -29,5 +30,6 @@ export {
   BallList,
   ActionButton,
   ActionButtonList,
-  RecentGamesList
+  RecentGamesList,
+  CartList
 }

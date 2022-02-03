@@ -29,12 +29,12 @@ export const ButtonContent = styled.Text`
 `
 
 export const StyledView = styled.View`
-  margin-vertical: 15px;
+  margin-vertical: 10px;
 `
 
 export const StyledViewRow = styled.View`
   flex-direction: row;
-  margin-vertical: 15px;
+  margin-vertical: 10px;
 `
 
 export const StyledText = styled.Text`
