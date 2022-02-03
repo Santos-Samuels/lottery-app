@@ -1,7 +1,7 @@
 import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
-import { FlatList } from "react-native";
-import { EmpetyMessage } from "@components/index";
+import { FlatList, View } from "react-native";
+import { EmpetyMessage, Text } from "@components/index";
 import { RecentGamesState } from "@store/types/recentGamesType";
 import RecentGame from "../RecentGame";
 
@@ -10,15 +10,18 @@ const RecentGamesList: React.FC = () => {
     (states: RootState) => states.recentGames as RecentGamesState
   );
 
-  if (!recentGamesState.recentGames)
+  if (recentGamesState.recentGames.length === 0)
     return <EmpetyMessage message="Not recent games found" />;
 
   return (
-    <FlatList
-      data={recentGamesState.recentGames}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={(itemData) => <RecentGame recentGame={itemData.item} />}
-    ></FlatList>
+    <View>
+      <Text>Total items: {recentGamesState.recentGames.length}</Text>
+      <FlatList
+        data={recentGamesState.recentGames}
+        keyExtractor={(item) => item.id.toString()}
+        renderItem={(itemData) => <RecentGame recentGame={itemData.item} />}
+      ></FlatList>
+    </View>
   );
 };
 

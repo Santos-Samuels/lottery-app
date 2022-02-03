@@ -28,7 +28,6 @@ const ForgetPasswordScreen: React.FC = () => {
   }, [])
 
   if (requestStatus.loading) return <Loading />
-  console.log('asd',recentGamesState.filters)
 
   return (
     <AppContainer>
