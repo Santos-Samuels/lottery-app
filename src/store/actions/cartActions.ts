@@ -1,19 +1,13 @@
 import { IApiPostCart, IBet, IGameRole } from "@shared/interfaces";
 import { NewBets } from "@shared/services";
+import { setAlert } from "@shared/utils";
 import {
   ADD_TO_CART,
   CartActionTypes,
   CartState,
   CLEAR_CART,
 } from "@store/types/cartTypes";
-import { Alert } from "react-native";
 import { Dispatch } from "redux";
-
-const cartAlert = (title: string, message: string) => {
-  Alert.alert(title, message, [
-    { text: "OK" },
-  ]);
-};
 
 export const addToCart = (
   dispatch: Dispatch<CartActionTypes>,
@@ -44,11 +38,11 @@ export const addToCart = (
   }
 
   if (cartState.items.some(item => item.choosen_numbers === sortedNewItem.toLocaleString())) {
-    cartAlert('Ops!', 'This bet is already in the cart')
+    setAlert('Ops!', 'This bet is already in the cart')
     return false
   }
 
-  cartAlert('Ops!', `You need ${currentRule.max_number - sortedNewItem.length} numbers to fill your bet`)
+  setAlert('Ops!', `You need ${currentRule.max_number - sortedNewItem.length} numbers to fill your bet`)
   return false
 };
 
@@ -75,15 +69,15 @@ export const checkout = async (dispatch: Dispatch<CartActionTypes>, CartState: C
     const response = await NewBets(bet)
     
     if (response) {
-      cartAlert('Thank you', 'Now you can filter by your bets')
+      setAlert('Thank you', 'Now you can filter by your bets')
       dispatch({ type: CLEAR_CART, payload: { items: [], totalAmount: 0 } });
       return true
     }
 
-    cartAlert('Ops!', `Something went wrong`)
+    setAlert('Ops!', `Something went wrong`)
   }
   
-  cartAlert('Ops!', `The minimum value of the cart is R$ ${minCartValue}, add a few more items`)
+  setAlert('Ops!', `The minimum value of the cart is R$ ${minCartValue}, add a few more items`)
   return false
 };
 

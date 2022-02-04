@@ -1,8 +1,8 @@
-import { User } from "@shared/interfaces"
+import { IUser } from "@shared/interfaces"
 import api from "../api"
 
 export const UpdateMyUser = async (newInfo: {name: string, email: string}) => {
-  const response = api.put<User>('/user/update', newInfo)
+  const response = api.put<IUser>('/user/update', newInfo)
     .then(response => response.data)
     .catch(() => false)
 

@@ -5,6 +5,7 @@ import { formatMoney } from "./formatMoney";
 import { formatStringArray } from "./formatStringArray";
 import { getToken } from "./getToken";
 import { usernameValidation } from "./usernameValidation";
+import { setAlert } from "./setAlert";
 
 export {
   emailValidation,
@@ -13,5 +14,6 @@ export {
   formatFiltersToAPI,
   formatStringArray,
   formatDate,
-  formatMoney
+  formatMoney,
+  setAlert
 }

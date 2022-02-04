@@ -1,4 +1,4 @@
-import { AuthActionTypes, AuthState, LOG_IN, LOG_OUT } from "@store/types/authTypes";
+import { AuthActionTypes, AuthState, EDIT_USER_INFO, LOG_IN, LOG_OUT } from "@store/types/authTypes";
 
 const initialState: AuthState = {token: '', user: null}
 
@@ -7,6 +7,9 @@ export const authReducer = (state = initialState, action: AuthActionTypes) => {
     return action.payload
 
   if (action.type === LOG_OUT)
+    return action.payload
+
+  if (action.type === EDIT_USER_INFO)
     return action.payload
 
   return state
