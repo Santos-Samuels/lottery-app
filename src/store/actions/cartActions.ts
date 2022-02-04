@@ -1,4 +1,5 @@
-import { IBet, IGameRole } from "@shared/interfaces";
+import { IApiPostCart, IBet, IGameRole } from "@shared/interfaces";
+import { NewBets } from "@shared/services";
 import {
   ADD_TO_CART,
   CartActionTypes,
@@ -38,7 +39,6 @@ export const addToCart = (
       user_id: 0,
     };
 
-    cartAlert('Item adicionado!', 'sei la')
     dispatch({ type: ADD_TO_CART, payload: { items: [...cartState.items, newCartItem], totalAmount: cartState.totalAmount + newCartItem.price } });
     return true
   }
@@ -61,6 +61,30 @@ export const removeFromCart = (
   const updatedItems = cartState.items.filter(item => item.id !== itemId)
   
   dispatch({ type: ADD_TO_CART, payload: { items: updatedItems, totalAmount: cartState.totalAmount - item!.price } });
+};
+
+export const checkout = async (dispatch: Dispatch<CartActionTypes>, CartState: CartState, minCartValue: number) => {
+  if (CartState.totalAmount >= minCartValue) {
+    const bet: IApiPostCart[] = CartState.items.map((item) => {
+      return {
+        game_id: item.game_id,
+        numbers: JSON.parse('[' + item.choosen_numbers + ']'),
+      };
+    });
+
+    const response = await NewBets(bet)
+    
+    if (response) {
+      cartAlert('Thank you', 'Now you can filter by your bets')
+      dispatch({ type: CLEAR_CART, payload: { items: [], totalAmount: 0 } });
+      return true
+    }
+
+    cartAlert('Ops!', `Something went wrong`)
+  }
+  
+  cartAlert('Ops!', `The minimum value of the cart is R$ ${minCartValue}, add a few more items`)
+  return false
 };
 
 export const clearCart = (dispatch: Dispatch<CartActionTypes>) => {

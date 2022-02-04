@@ -17,14 +17,25 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import { CartState } from "@store/types/cartTypes";
 import { formatMoney } from "@shared/utils";
-import { clearCart } from "@store/actions/cartActions";
+import { checkout } from "@store/actions/cartActions";
+import { RuleState } from "@store/types/rulesTypes";
+import { MainScreenProp } from "@stacks/index";
+import { useNavigation } from "@react-navigation/native";
+import { requestRecentGames } from "@store/actions/recentGamesActions";
 
 const CartScreen: React.FC = () => {
   const cart = useSelector((states: RootState) => states.cart as CartState);
+  const rules = useSelector((states: RootState) => states.rules as RuleState);
+  const mainNavigation = useNavigation<MainScreenProp>()
   const dispatch = useDispatch()
   
-  const checkOut = () => {
-    clearCart(dispatch)
+  const checkoutHandler = async () => {
+    const isSuccess = await checkout(dispatch, cart, rules!.lotteryRules.min_cart_value)
+
+    if (isSuccess) {
+      await requestRecentGames(dispatch, [])
+      mainNavigation.navigate('HomeScreen')
+    }
   }
 
   return (
@@ -42,7 +53,7 @@ const CartScreen: React.FC = () => {
           <StyledText>TOTAL: {formatMoney(cart.totalAmount)}</StyledText>
         </StyledViewRow>
 
-        <ButtonContainer onPress={checkOut}>
+        <ButtonContainer onPress={checkoutHandler}>
           <ButtonContent>Save</ButtonContent>
           <AntDesign
             name="arrowright"

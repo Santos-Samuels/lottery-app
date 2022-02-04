@@ -71,7 +71,7 @@ export interface ILotteryRoles {
   types: IGameRole[]
 }
 
-export interface IApiPostGames {
+export interface IApiPostCart {
   game_id: number;
   numbers: number[]
 }

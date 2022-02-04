@@ -2,6 +2,9 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { UserScreen, HomeScreen, NewBetScreen, CartScreen } from "@screens/index";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { colors } from "@shared/globalStyles/colors";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
+import { CartState } from "@store/types/cartTypes";
 
 export type MainStackParamList = {
   HomeScreen: undefined;
@@ -13,7 +16,8 @@ export type MainStackParamList = {
 const Tab = createBottomTabNavigator<MainStackParamList>();
 
 const MainStack: React.FC = () => {
-  const teste = true
+  const cart = useSelector((states: RootState) => states.cart as CartState);
+  
   return (
     // tabBarBadge: 3
     <Tab.Navigator
@@ -64,6 +68,7 @@ const MainStack: React.FC = () => {
               color={focused ? colors.primary : color}
             />
           ),
+          tabBarBadge: cart.items.length > 0 ? cart.items.length : undefined
         }}
       />
       <Tab.Screen
