@@ -15,6 +15,7 @@ import { TouchableOpacity } from "react-native";
 import { IRegisterInfo } from "@shared/interfaces";
 import { AuthScreenProp } from "@stacks/index";
 import { useNavigation } from "@react-navigation/native";
+import { RegisterUser } from "@shared/services/auth/register";
 
 const formInitialValues: IRegisterInfo = { name: "", email: "", password: "" };
 
@@ -31,7 +32,7 @@ const SignUpScreen: React.FC = () => {
     defaultValues: formInitialValues,
   });
 
-  const signupHandler = (data: IRegisterInfo) => {
+  const signupHandler = async (data: IRegisterInfo) => {
     if (!usernameValidation(data.name)) {
       setError("name", { message: "Invalid name" })
       setErrorMessage("Invalid name");
@@ -44,9 +45,10 @@ const SignUpScreen: React.FC = () => {
       return
     }
 
+    await RegisterUser(data)
     reset(formInitialValues)
     setErrorMessage("");
-    console.log(data);
+    navigation.navigate('LogInScreen')
   };
 
   return (

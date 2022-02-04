@@ -24,8 +24,6 @@ export const RootStack: React.FC = () => {
   const rules = useSelector((states: RootState) => states.rules as RuleState)
   const auth = useSelector((states: RootState) => states.auth as AuthState)
 
-  console.log(auth)
-
   useEffect(() => {
     if (!rules)
       requestLotteryRules(dispatch)
