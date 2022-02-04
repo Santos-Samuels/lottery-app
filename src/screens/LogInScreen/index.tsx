@@ -15,13 +15,13 @@ import { colors } from "@shared/globalStyles/colors";
 import { TouchableOpacity } from "react-native";
 import { ILoginInfo, IRequestStatus } from "@shared/interfaces";
 import { useNavigation } from "@react-navigation/native";
-import { AuthScreenProp, MainScreenProp } from "@stacks/index";
+import { AuthScreenProp } from "@stacks/index";
 import { useDispatch } from 'react-redux';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { login } from "@store/actions/authActions";
 
 const formInitialValues: ILoginInfo = { email: "", password: "" };
-const InitialRequestStatus: IRequestStatus = { loading: false, success: false, error: '' };
+const initialRequestStatus: IRequestStatus = { loading: false, success: false, error: '' };
 
 const LogInScreen: React.FC = () => {
   const {
@@ -36,10 +36,9 @@ const LogInScreen: React.FC = () => {
     defaultValues: formInitialValues,
   });
   const [errorMessage, setErrorMessage] = useState("");
-  const [loginStatus, setLoginStatus] = useState<IRequestStatus>(InitialRequestStatus);
+  const [loginStatus, setLoginStatus] = useState<IRequestStatus>(initialRequestStatus);
   const dispatch = useDispatch();
   const authNavigation = useNavigation<AuthScreenProp>()
-  const mainNavigation = useNavigation<MainScreenProp>()
 
   const enteredInfoValidation = (data: ILoginInfo) => {
     if (!emailValidation(data.email)) {
@@ -58,22 +57,19 @@ const LogInScreen: React.FC = () => {
 
     if (TOKEN) {
       await AsyncStorage.setItem('TOKEN', JSON.stringify(TOKEN))
-      setLoginStatus(prevInfo => {return { ...prevInfo, loading: false, success: true }})
+      setLoginStatus({ ...initialRequestStatus, success: true })
       setErrorMessage("");
       reset(formInitialValues)
       return
     }
       
-    setLoginStatus(prevInfo => {return { ...prevInfo, loading: false, error: 'Incorret email or password' }})
+    setLoginStatus({ ...initialRequestStatus, error: 'Incorret email or password' })
     setErrorMessage("Incorret email or password");
   };
 
   useEffect(() => {
     if (loginStatus.loading)
       loginHandler()
-
-    if (loginStatus.success) 
-      mainNavigation.navigate('HomeScreen')
 
   }, [loginStatus])
 
