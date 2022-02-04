@@ -15,6 +15,7 @@ import { TouchableOpacity } from "react-native";
 import { IResetPasswordInfo } from "@shared/interfaces";
 import { AuthScreenProp } from "@stacks/index";
 import { useNavigation } from "@react-navigation/native";
+import { ResetPassword } from "@shared/services";
 
 const formInitialValues: IResetPasswordInfo = { email: "" };
 
@@ -31,16 +32,24 @@ const ResetPasswordScreen: React.FC = () => {
     defaultValues: formInitialValues,
   });
 
-  const signupHandler = (data: IResetPasswordInfo) => {
+  const signupHandler = async (data: IResetPasswordInfo) => {
     if (!emailValidation(data.email)) {
       setError("email", { message: "Invalid email" })
       setErrorMessage("Invalid email");
       return
     }
 
-    reset(formInitialValues)
-    setErrorMessage("");
-    console.log(data);
+    const response = await ResetPassword(data.email)
+
+    if (typeof response !== 'boolean') {
+      reset(formInitialValues)
+      setErrorMessage("");
+      navigation.navigate('ChangePasswordScreen', {token: response.token!})
+      return
+    }
+
+    setError("email", { message: "Account not found" })
+    setErrorMessage("Account not found");
   };
 
   return (
