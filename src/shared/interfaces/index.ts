@@ -75,10 +75,3 @@ export interface IApiPostCart {
   game_id: number;
   numbers: number[]
 }
-
-// export interface IBetError{
-//   isError: boolean;
-//   message: string;
-//   icon: string;
-//   color: string;
-// }

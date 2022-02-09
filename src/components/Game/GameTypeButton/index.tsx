@@ -45,8 +45,8 @@ const GameTypeButton: React.FC<IGameTypeButton> = (props) => {
 
   return (
     <TouchableWithoutFeedback onPress={updateFilterHandler}>
-      <ButtonContent color={props.rule.color} isActive={isActive}>
-        <StyledText color={props.rule.color} isActive={isActive}>
+      <ButtonContent color={props.rule.color} isActive={recentGamesState.filters.includes(props.rule.type)}>
+        <StyledText color={props.rule.color} isActive={recentGamesState.filters.includes(props.rule.type)}>
           {props.rule.type}
         </StyledText>
       </ButtonContent>

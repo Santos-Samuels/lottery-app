@@ -1,4 +1,5 @@
 import { IGameRole } from "@shared/interfaces";
+import { setAlert } from "@shared/utils";
 import {
   BetActionTypes,
   CLEAR_NUMBERS,
@@ -10,12 +11,18 @@ import { Dispatch } from "redux";
 export const updateNumbers = (
   dispatch: Dispatch<BetActionTypes>,
   betNumbers: number[],
-  number: number
+  number: number,
+  currentRule: IGameRole
 ) => {
   let updetedNumbers: number[] = []
 
-  if (!betNumbers.includes(number))
-    updetedNumbers = [...betNumbers, number];
+  if (betNumbers.length === currentRule.max_number && !betNumbers.includes(number)) {
+    setAlert('Ops!', `The maximum of ${currentRule.max_number} numbers for this bet has already been reached`)
+    return
+  }
+
+  if (!betNumbers.includes(number) && betNumbers.length < currentRule.max_number)
+    updetedNumbers = [...betNumbers, number]; 
   else
     updetedNumbers = betNumbers.filter((num) => num !== number);
   

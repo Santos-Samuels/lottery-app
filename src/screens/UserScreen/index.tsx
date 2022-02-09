@@ -17,12 +17,12 @@ import { RootState } from "@store/index";
 import { AuthState } from "@store/types/authTypes";
 import {
   emailValidation,
-  formatDate,
   setAlert,
   usernameValidation,
 } from "@shared/utils";
 import { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
+import { ActivityIndicator } from 'react-native';
 
 const UserScreen: React.FC = () => {
   const dispatch = useDispatch();
@@ -37,27 +37,32 @@ const UserScreen: React.FC = () => {
   } = useForm({
     defaultValues: { name: auth.user!.name, email: auth.user!.email },
   });
+  const [loading, setLoading] = useState(false)
 
   const logoutHandler = async () => {
     await logout(dispatch);
   };
 
   const editUserInfoHandler = async (data: { name: string, email: string }) => {
+    setLoading(true)
     if (!usernameValidation(data.name)) {
       setError("name", { message: "Invalid name" });
       setAlert("Error", "Invalid name");
+      setLoading(false)
       return false;
     }
 
     if (!emailValidation(data.email)) {
       setError("email", { message: "Invalid email" });
       setAlert("Error", "Invalid email");
+      setLoading(false)
       return;
     }
 
     await editUserInfo(dispatch, data)
     setIsEditing(false);
     reset();
+    setLoading(false)
   };
 
   if (isEditing) {
@@ -78,7 +83,7 @@ const UserScreen: React.FC = () => {
               <StyledText color="white">Editing</StyledText>
 
             <EditButtonsContainer>
-                <StyledTouchableOpacity onPress={() => setIsEditing(false)}>
+                <StyledTouchableOpacity onPress={() => setIsEditing(false)} disabled={loading}>
                   <StyledButton color={colors.error}>
                     <ButtonText color="#FFFFFF">Cancel</ButtonText>
                   </StyledButton>
@@ -86,9 +91,10 @@ const UserScreen: React.FC = () => {
 
                 <StyledTouchableOpacity
                   onPress={handleSubmit(editUserInfoHandler)}
+                  disabled={loading}
                 >
                   <StyledButton color="#FFFFFF">
-                    <ButtonText color={colors.text}>Save</ButtonText>
+                    {loading ? <ActivityIndicator size="small" color={colors.primary} /> : <ButtonText color={colors.text}>Save</ButtonText>}
                   </StyledButton>
                 </StyledTouchableOpacity>
             </EditButtonsContainer>

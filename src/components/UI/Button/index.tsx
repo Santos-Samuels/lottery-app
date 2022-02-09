@@ -1,4 +1,5 @@
 import { StyledButton, StyledTouchableOpacity } from './style'
+import { ActivityIndicator } from 'react-native';
 
 interface IProps {
   onPress: () => void;
@@ -8,7 +9,7 @@ interface IProps {
 const Button: React.FC<IProps> = (props) => {
   return (
     <StyledTouchableOpacity onPress={props.onPress} disabled={props.isLoading ? props.isLoading : false}>
-      <StyledButton>{ props.children }</StyledButton>
+      {props.isLoading ? <ActivityIndicator size="small" color="#FFFFFF" /> : <StyledButton>{ props.children }</StyledButton>}
     </StyledTouchableOpacity>
   )
 }

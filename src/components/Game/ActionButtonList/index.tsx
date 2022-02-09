@@ -7,6 +7,7 @@ import { RootState } from "@store/index";
 import { clearNumbers, completeNumbers } from "@store/actions/betActions";
 import { RuleState } from "@store/types/rulesTypes";
 import { addToCart } from "@store/actions/cartActions";
+import { updateCurrentGameId } from "@store/actions/rulesActions";
 
 const ActionButtonList: React.FC = () => {
   const bet = useSelector((states: RootState) => states.bet as BetState);
@@ -15,8 +16,10 @@ const ActionButtonList: React.FC = () => {
   const dispatch = useDispatch()
 
   const addToCartHandler = () => {
-    addToCart(dispatch, cart, bet, rules!.currentGameRule)
-    clearNumbers(dispatch)
+    const isSuccess = addToCart(dispatch, cart, bet, rules!.currentGameRule)
+    if(isSuccess) {
+      clearNumbers(dispatch)
+    } 
   }
 
   return (

@@ -1,7 +1,7 @@
 import { IBet } from "@shared/interfaces"
 import { ListBets } from "@shared/services"
 import { formatFiltersToAPI } from "@shared/utils"
-import { RecentGamesActionTypes, REQUEST_RECENT_GAMES, UPDATE_FILTERS } from "@store/types/recentGamesType"
+import { CLEAR_FILTERS, RecentGamesActionTypes, REQUEST_RECENT_GAMES, UPDATE_FILTERS } from "@store/types/recentGamesType"
 import { Dispatch } from "redux"
 
 export const requestRecentGames = async (dispatch: Dispatch<RecentGamesActionTypes>, filters: string[]) => {
@@ -26,4 +26,9 @@ export const updateFilters = async (dispatch: Dispatch<RecentGamesActionTypes>, 
 
   const updatedRecentGames = await requestRecentGames(dispatch, updatedFilters)
   dispatch({ type: UPDATE_FILTERS, payload: {recentGames: updatedRecentGames as IBet[], filters: updatedFilters} })
+}
+
+export const clearFilters = async (dispatch: Dispatch<RecentGamesActionTypes>) => {
+  const updatedRecentGames = await requestRecentGames(dispatch, [])
+  dispatch({ type: CLEAR_FILTERS, payload: {recentGames: updatedRecentGames as IBet[], filters: []} })
 }

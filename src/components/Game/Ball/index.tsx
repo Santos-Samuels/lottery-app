@@ -17,7 +17,7 @@ const Ball: React.FC<IProps> = (props) => {
   const dispatch = useDispatch()
 
   const updateNumberHandler = () => {
-    updateNumbers(dispatch, bet, props.number)
+    updateNumbers(dispatch, bet, props.number, rules!.currentGameRule)
   }
 
 

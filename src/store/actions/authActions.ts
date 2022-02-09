@@ -18,7 +18,6 @@ export const login = async (dispatch: Dispatch<AuthActionTypes>, loginInfo: ILog
 
 export const logout = async (dispatch: Dispatch<AuthActionTypes>) => {
   await AsyncStorage.removeItem('TOKEN')
-  console.log(await AsyncStorage.getItem('TOKEN'))
   dispatch({ type: LOG_OUT, payload: {token: '', user: null} })
 }
 
